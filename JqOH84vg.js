@@ -1,4 +1,4 @@
-
+f
 /*!
    JW Player version 8.18.3
    Copyright (c) 2020, JW Player, All Rights Reserved
@@ -382,7 +382,7 @@ var jwDefaults = {
   "logo": {
     "file": "http://animemaster.epizy.com/tvonline/cartoon-network/logo%20big.png",
     "hide": true,
-    "link": "http://animemaster.epizy.com/tvonline",
+    "link": "https://github.com/LuigiZ0/",
     "margin": "10",
     "position": "top-right"
   },

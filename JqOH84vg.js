@@ -1,4 +1,4 @@
-f
+
 /*!
    JW Player version 8.18.3
    Copyright (c) 2020, JW Player, All Rights Reserved

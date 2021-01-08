@@ -380,7 +380,7 @@ var jwDefaults = {
   "height": 260,
   "key": "OXDAVV7+C+Ggoh35qiBy/o2QnQxgRAGB9C6PVA==",
   "logo": {
-    "file": "http://animemaster.epizy.com/tvonline/cartoon-network/logo%20big.png",
+    "file": "https://luigiz0.github.io//image.png",
     "hide": true,
     "link": "https://github.com/LuigiZ0/",
     "margin": "10",

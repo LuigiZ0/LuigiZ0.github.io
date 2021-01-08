@@ -24,7 +24,7 @@ window.jwplayer=function(t){function e(e){for(var n,i,o=e[0],u=e[1],a=0,s=[];a<o
         return;
     }
 
-    /*
+    *
         Check if the version of the player requires the compatibility shim. Only versions below 8 require this script.
     */
     if (parseInt(playerLibrary.version, 10) >= 8) {
@@ -388,7 +388,7 @@ var jwDefaults = {
   },
   "mute": false,
   "ph": 1,
-  "pid": "/JqOH84vg",
+  "pid": "JqOH84vg",
   "playbackRateControls": false,
   "preload": "metadata",
   "repeat": false,

@@ -388,7 +388,7 @@ var jwDefaults = {
   },
   "mute": false,
   "ph": 1,
-  "pid": "JqOH84vg",
+  "pid": "/JqOH84vg",
   "playbackRateControls": false,
   "preload": "metadata",
   "repeat": false,

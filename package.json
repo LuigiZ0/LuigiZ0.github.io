@@ -1,0 +1,16 @@
+{
+  "name": "Anime-addon",
+  "version": "1.0.0",
+  "description": "Addon Animes",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "stremio-addon-sdk": "^1.6.10",
+    "axios": "^1.6.0"
+  },
+  "engines": {
+    "node": "18.x"
+  }
+}

@@ -1,14 +1,16 @@
 {
-  "name": "Anime-addon",
+  "name": "anime-addon",
   "version": "1.0.0",
-  "description": "Addon Animes",
+  "description": "Addon BetterAnime",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
   },
   "dependencies": {
     "stremio-addon-sdk": "^1.6.10",
-    "axios": "^1.6.0"
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "https-proxy-agent": "^7.0.2"
   },
   "engines": {
     "node": "18.x"

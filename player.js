@@ -2,7 +2,7 @@ window.addEventListener('message', (event) => {
     if (event.data.action === 'INIT_PLAYER') {
         const { token, streamData } = event.data;
 
-        // 1. Função infalível para vasculhar o JSON e encontrar a URL do manifesto DASH (.mpd)
+        // 1. Função infalível para vasculhar o JSON e encontrar a URL do DASH (.mpd)
         function findDashManifest(obj) {
             if (typeof obj === 'string' && obj.includes('.mpd')) return obj;
             if (typeof obj === 'object' && obj!== null) {
@@ -16,17 +16,27 @@ window.addEventListener('message', (event) => {
 
         const dashUrl = findDashManifest(streamData);
 
+        // Se a API da Crunchyroll não devolver o vídeo, avisa na tela
         if (!dashUrl) {
-            console.error("Erro Crítico: Link DASH (.mpd) não encontrado no retorno da API.", streamData);
+            const loadingText = document.getElementById("loading-text");
+            if (loadingText) loadingText.innerHTML = "Erro Crítico: Link de vídeo não encontrado no servidor da Crunchyroll.";
+            console.error("Manifesto DASH ausente: ", streamData);
             return;
         }
 
-        // 2. Extração de legendas (Softsubs) do JSON
+        // 2. A CORREÇÃO: Esconde a tela de loading infinita do HTML original
+        const loadingContainer = document.querySelector(".loading_container");
+        if (loadingContainer) {
+            loadingContainer.style.display = "none";
+        }
+
+        // 3. Extração de legendas (Softsubs)
         let subtitleTracks =;
         try {
-            const subs = streamData.data.subtitles |
+            // Vascula pelas legendas no objeto da API V3
+            const subs = streamData.data?.subtitles |
 
-| streamData.data?.subtitles;
+| streamData.subtitles;
             if (subs) {
                 for (let key in subs) {
                     subtitleTracks.push({
@@ -39,25 +49,17 @@ window.addEventListener('message', (event) => {
                 }
             }
         } catch(e) { 
-            console.log("Aviso: Nenhuma legenda externa encontrada ou falha ao processar.", e); 
+            console.log("Aviso: Nenhuma legenda processada.", e); 
         }
 
-        // 3. Inicialização e Mapeamento de Qualidade do JWPlayer 8+
+        // 4. Inicializa o JWPlayer e entrega a chave de Autenticação Premium
         jwplayer("player_div").setup({
-            playlist: [{
-                sources: [{
-                    file: dashUrl, // O arquivo único que contém todas as resoluções 
-                    type: "application/dash+xml",
-                    drm: {
-                        widevine: {
-                            url: "https://www.crunchyroll.com/license/v1/license/widevine",
-                            headers:
+            playlist:
                         }
                     }
                 }],
                 tracks: subtitleTracks
             }],
-            // Mapeia a taxa de dados bruta da Crunchyroll para os nomes de resolução no menu da engrenagem
             qualityLabels: {
                 "8000": "1080p",
                 "6000": "1080p",
@@ -68,7 +70,7 @@ window.addEventListener('message', (event) => {
                 "1000": "360p",
                 "500": "240p"
             },
-            playbackRateControls: [0.75, 1, 1.25, 1.5, 2], // Velocidade do vídeo
+            playbackRateControls: [0.75, 1, 1.25, 1.5, 2],
             autostart: true,
             width: "100%",
             height: "100%"

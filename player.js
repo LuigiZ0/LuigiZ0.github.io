@@ -76,7 +76,7 @@ window.addEventListener('message', function(event) {
         "500": "240p"
     };
 
-    // CORREÇÃO: Definir a playlist corretamente usando as variáveis criadas
+    // CORREÇÃO: Playlist definida corretamente com o objeto de vídeo dentro
     jwplayer("player_div").setup({
         "playlist": [{
             "file": dashUrl,

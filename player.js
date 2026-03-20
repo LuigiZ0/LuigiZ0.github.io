@@ -1,12 +1,12 @@
 window.addEventListener('message', function(event) {
-    if (event.data.action!== 'INIT_PLAYER') return;
+    if (event.data.action !== 'INIT_PLAYER') return;
 
     var token = event.data.token;
     var streamData = event.data.streamData;
 
     function findDash(obj) {
         if (typeof obj === 'string' && obj.indexOf('.mpd') > -1) return obj;
-        if (typeof obj === 'object' && obj!== null) {
+        if (typeof obj === 'object' && obj !== null) {
             for (var key in obj) {
                 var res = findDash(obj[key]);
                 if (res) return res;
@@ -29,7 +29,7 @@ window.addEventListener('message', function(event) {
         loadingContainer.style.display = "none";
     }
 
-    var subtitleTracks = new Array();
+    var subtitleTracks = [];
     try {
         var subs = null;
         if (streamData.data && streamData.data.subtitles) {
@@ -62,13 +62,7 @@ window.addEventListener('message', function(event) {
 
     var widevineConfig = {
         "url": "https://www.crunchyroll.com/license/v1/license/widevine",
-        "headers": new Array(authHeader)
-    };
-
-    var videoSource = {
-        "file": dashUrl,
-        "type": "dash",
-        "drm": { "widevine": widevineConfig }
+        "headers": [authHeader]
     };
 
     var qualityMap = {
@@ -82,13 +76,18 @@ window.addEventListener('message', function(event) {
         "500": "240p"
     };
 
+    // CORREÇÃO: Definir a playlist corretamente usando as variáveis criadas
     jwplayer("player_div").setup({
-        "playlist":,
+        "playlist": [{
+            "file": dashUrl,
+            "type": "dash",
+            "drm": { "widevine": widevineConfig },
+            "tracks": subtitleTracks
+        }],
         "qualityLabels": qualityMap,
-        "playbackRateControls": new Array(0.75, 1, 1.25, 1.5, 2),
+        "playbackRateControls": [0.75, 1, 1.25, 1.5, 2],
         "autostart": true,
         "width": "100%",
-        "height": "100%",
-        "base": "https://ssl.p.jwpcdn.com/player/v/8.26.1/jwplayer.js"
+        "height": "100%"
     });
 });

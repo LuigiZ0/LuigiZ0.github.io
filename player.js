@@ -89,6 +89,6 @@ window.addEventListener('message', function(event) {
         "autostart": true,
         "width": "100%",
         "height": "100%",
-        "base": "https://cdnjs.cloudflare.com/ajax/libs/jwplayer/8.21.0/"
+        "base": "https://ssl.p.jwpcdn.com/player/v/8.26.1/jwplayer.js"
     });
 });

@@ -4,7 +4,6 @@ window.addEventListener('message', function(event) {
     var token = event.data.token;
     var streamData = event.data.streamData;
 
-    // 1. Função para encontrar o manifesto de vídeo
     function findDash(obj) {
         if (typeof obj === 'string' && obj.indexOf('.mpd') > -1) return obj;
         if (typeof obj === 'object' && obj!== null) {
@@ -25,13 +24,11 @@ window.addEventListener('message', function(event) {
         return;
     }
 
-    // 2. Remove a tela de loading
     var loadingContainer = document.querySelector(".loading_container");
     if (loadingContainer) {
         loadingContainer.style.display = "none";
     }
 
-    // 3. Organiza as legendas dinamicamente
     var subtitleTracks = new Array();
     try {
         var subs = null;
@@ -58,7 +55,6 @@ window.addEventListener('message', function(event) {
         console.log("Nenhuma legenda externa processada.", e);
     }
 
-    // 4. Configura as chaves do JWPlayer (Sem aninhamento para evitar erros)
     var authHeader = {
         "name": "Authorization",
         "value": "Bearer " + token
@@ -69,22 +65,11 @@ window.addEventListener('message', function(event) {
         "headers": new Array(authHeader)
     };
 
-    var drmConfig = {
-        "widevine": widevineConfig
-    };
-
     var videoSource = {
         "file": dashUrl,
-        "type": "application/dash+xml",
-        "drm": drmConfig
+        "type": "dash",
+        "drm": { "widevine": widevineConfig }
     };
-
-    var mediaItem = {
-        "sources": new Array(videoSource),
-        "tracks": subtitleTracks
-    };
-
-    var playlistData = new Array(mediaItem);
 
     var qualityMap = {
         "8000": "1080p",
@@ -97,13 +82,13 @@ window.addEventListener('message', function(event) {
         "500": "240p"
     };
 
-    // 5. Inicia o reprodutor com a licença do Widevine
     jwplayer("player_div").setup({
-        "playlist": playlistData,
+        "playlist":,
         "qualityLabels": qualityMap,
         "playbackRateControls": new Array(0.75, 1, 1.25, 1.5, 2),
         "autostart": true,
         "width": "100%",
-        "height": "100%"
+        "height": "100%",
+        "base": "https://cdnjs.cloudflare.com/ajax/libs/jwplayer/8.21.0/"
     });
 });
